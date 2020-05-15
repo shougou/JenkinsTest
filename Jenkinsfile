@@ -80,7 +80,8 @@ pipeline {
                 echo "用户名4 " + deploy_username
                 // echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
-
+                url = 'http://www.baidu.com'
+                echo "${url}"
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
             }
