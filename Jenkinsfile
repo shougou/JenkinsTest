@@ -10,7 +10,6 @@ pipeline {
                     name == 'lisi'
                     echo name
                 }
-                
             }
         }
         stage('Parallel - Staging'){
@@ -32,8 +31,7 @@ pipeline {
                         echo 'on Parallel - B'
                     }
                 }
-            }
-            
+            } 
         }
         stage('Test') {
             steps {
