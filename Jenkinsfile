@@ -28,13 +28,13 @@ pipeline {
                 description: '你需要在哪台机器上进行部署 ?',
                 name: 'deploy_hostname', 
                 defaultValue: 'host131'
-            )
-            // (
-            //     description: '你需要在哪台机器上进行部署 ?',
-            //     name: 'deploy_hostname', 
-            //     defaultValue: 'host131' 
-            // )
+        )
        
+        string(
+                description: '部署机器连接时需要用到的用户名是什么 ?',
+                name: 'deploy_username', 
+                defaultValue: 'admin'
+        )
 
         text(
             name: 'release_note', 
@@ -102,7 +102,8 @@ pipeline {
         }
         stage('Deploy - Staging') {
              steps {
-                echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..." 
+                echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
+                echo "Deploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
                 echo "Deploy stage: 部署连接的密码 : ${params.deploy_password} ..." 
                 echo "Deploy stage: Release Note的信息为 : ${params.release_note} ..." 
                 echo './deploy staging'
