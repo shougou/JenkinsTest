@@ -24,7 +24,7 @@ pipeline {
             choices: ['Module1', 'Module2', 'Module3']
         )
             
-        string[
+        string
             (
                 description: '你需要在哪台机器上进行部署 ?',
                 name: 'deploy_hostname', 
@@ -35,7 +35,7 @@ pipeline {
             //     name: 'deploy_hostname', 
             //     defaultValue: 'host131' 
             // )
-        ]
+       
 
         text(
             name: 'release_note', 
