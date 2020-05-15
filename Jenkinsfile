@@ -5,6 +5,7 @@ pipeline {
         // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
         timeout(time:1,unit:'HOURS')
     }
+    // 代码改了参数之后第一次执行pipeline的时候参数还是显示之前的，设置git提交之后jenkins能自动获取的最新代码
     parameters {
         // string 字符串类型参数
         // text	文本类型参数，与字符串的区别在于可以包含多行信息，用于传入较多信息输入
@@ -13,9 +14,9 @@ pipeline {
         // file	指定构建过程中所需要的文件
         // password 考虑到安全的因素，需要通过参数方式传递的密码类型
 
-        string (name:'user',defaultValue:'hanpl',description:'')
-        string (name:'manager',defaultValue:'zongzy',description:'')
-        booleanParam (name:'isFriend',defaultValue:true,description:'')
+        // string (name:'user',defaultValue:'hanpl',description:'')
+        // string (name:'manager',defaultValue:'zongzy',description:'')
+        // booleanParam (name:'isFriend',defaultValue:true,description:'')
 
         choice(
             description: '你需要选择哪个模块进行构建 ?',
