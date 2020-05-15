@@ -7,18 +7,26 @@ pipeline {
     }
     parameters {
         string (name:'user',defaultValue:'hanpl',description:'')
+        string (name:'manager',defaultValue:'zongzy',description:'')
         booleanParam (name:'isFriend',defaultValue:true,description:'')
     }
     stages {
         stage('Build - Staging') {
             steps {
-                // 引用界面传入的参数，两种方式
+                // 引用界面传入的参数，两种方式 user是系统变量root
                 echo 'name is '+name
                 echo 'params.name is '+params.name
 
                 echo 'user is '+params.user
-                echo 'params.user is '+user
-                echo env.PATH
+                echo 'params.user is '+ params.user
+
+                // echo env.PATH 打印环境变量
+
+                echo 'isFriend is '+isFriend
+                echo 'isFriend is '+params.isFriend
+
+                echo 'manager is '+manager
+                echo 'manager is '+params.manager
                 
                 script{
                     // name赋值，不正确不生效
@@ -62,11 +70,12 @@ pipeline {
         stage('RetryAndTimeout - Staging') {
             steps {
                 retry(3) {
-                    sh './flakey-deploy.sh'
+                    // 没有这个文件的话会尝试3次，然后流水线状态为失败
+                    // sh './flakey-deploy.sh'
                 }
                 // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。
                 timeout(time: 3, unit: 'MINUTES') {
-                    sh './health-check.sh'
+                    // sh './health-check.sh'
                 }
             }
         }
