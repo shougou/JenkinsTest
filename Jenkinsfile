@@ -1,7 +1,11 @@
 pipeline {
     agent any
+    // 定义流水线运行时的配置选项
+    options {
+        timeout(time:1,unit:'SECONDS')
+    }
     stages {
-        stage('Build') {
+        stage('Build - Staging') {
             steps {
                 echo name
                 echo env.PATH
@@ -33,7 +37,7 @@ pipeline {
                 }
             } 
         }
-        stage('Test') {
+        stage('Test - Staging') {
             steps {
                 echo 'Testing'
             }
@@ -44,17 +48,17 @@ pipeline {
                 echo './run-smoke-tests'
             }
         }
-        // stage('RetryAndTimeout') {
-        //     steps {
-        //         retry(3) {
-        //             sh './flakey-deploy.sh'
-        //         }
-
-        //         timeout(time: 3, unit: 'MINUTES') {
-        //             sh './health-check.sh'
-        //         }
-        //     }
-        // }
+        stage('RetryAndTimeout - Staging') {
+            steps {
+                retry(3) {
+                    sh './flakey-deploy.sh'
+                }
+                // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。
+                timeout(time: 3, unit: 'MINUTES') {
+                    sh './health-check.sh'
+                }
+            }
+        }
     }
     // post 部分定义一个或多个steps 
     // currentBuild.result
@@ -78,7 +82,6 @@ pipeline {
         success {
             echo '-- This will run only if successful'
             // 配置邮箱  没有配置邮箱地址
-            mail from: '13111002493@163.com',
             mail to: '13111002493@163.com',
             subject: "successed Pipeline: ${currentBuild.fullDisplayName}",
             body: "Something is right with ${env.BUILD_URL}"
