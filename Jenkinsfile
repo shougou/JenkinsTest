@@ -87,8 +87,9 @@ pipeline {
                 //     name == 'lisi'
                 //     echo name
                 // }
-                // echo "参数：${params}"
-                echo '参数：${params}'
+                echo "参数：${params}"
+                echo "参数：${deploy_username}"
+                echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
 
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
