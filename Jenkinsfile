@@ -89,7 +89,7 @@ pipeline {
                 // }
                 // echo "参数：${params}"
                 echo '参数：${params}'
-                echo '参数：' params
+                // echo '参数：' params //错误用法
 
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
