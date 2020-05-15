@@ -28,12 +28,12 @@ pipeline {
             (
                 description: '你需要在哪台机器上进行部署 ?',
                 name: 'deploy_hostname', 
-                defaultValue: 'host131', 
+                defaultValue: 'host131'
             )
             // (
             //     description: '你需要在哪台机器上进行部署 ?',
             //     name: 'deploy_hostname', 
-            //     defaultValue: 'host131', 
+            //     defaultValue: 'host131' 
             // )
         ]
 
