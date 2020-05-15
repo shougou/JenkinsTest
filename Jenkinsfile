@@ -44,12 +44,25 @@ pipeline {
                 echo './run-smoke-tests'
             }
         }
+        // stage('RetryAndTimeout') {
+        //     steps {
+        //         retry(3) {
+        //             sh './flakey-deploy.sh'
+        //         }
+
+        //         timeout(time: 3, unit: 'MINUTES') {
+        //             sh './health-check.sh'
+        //         }
+        //     }
+        // }
     }
     // post 部分定义一个或多个steps 
     // currentBuild.result
     post{
         // 无论流水线或阶段的完成状态如何，都允许在 post 部分运行该步骤。
         always {
+            //archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+            //junit 'build/reports/**/*.xml'
             echo '-- This will always run'
         }
         // 只有当前流水线或阶段的完成状态与它之前的运行不同时，才允许在 post 部分运行该步骤。
@@ -64,7 +77,9 @@ pipeline {
         // 只有当前流水线或阶段的完成状态为"success"，通常web UI是蓝色或绿色。
         success {
             echo '-- This will run only if successful'
-            mail to: 13111002493@163.com, subject: 'The Pipeline successed :)'
+            mail to: 'team@example.com',
+            subject: "successed Pipeline: ${currentBuild.fullDisplayName}",
+            body: "Something is right with ${env.BUILD_URL}"
         }
         // 只有当前流水线或阶段的完成状态为"unstable"，通常由于测试失败,代码违规等造成。通常web UI是黄色。
         unstable {            
