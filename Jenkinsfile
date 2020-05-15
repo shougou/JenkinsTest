@@ -65,16 +65,6 @@ pipeline {
     stages {
         stage('Build - Staging') {
             steps {
-                // 引用界面传入的参数，两种方式 user是系统变量root
-                // echo 'name is '+name
-                // echo 'params.name is '+params.name
-
-                // echo 'user is '+params.user //hanpl
-                // echo 'params.user is '+ params.user //hanpl
-                // echo 'params.user is '+ user //root
-                // echo '${params.user} is '+ ${params.user} //hanpl
-                
-                
                 // // echo env.PATH 打印环境变量
 
                 // script{
@@ -83,9 +73,10 @@ pipeline {
                 //     echo name
                 // }
                 echo "参数：${params}"
-                echo "用户名 ${deploy_username}"
-                echo "用户名" + params.deploy_username
-                echo "用户名" + deploy_username
+                echo "用户名1 ${deploy_username}"
+                echo "用户名2 ${params.deploy_username}"
+                echo "用户名3" + params.deploy_username
+                echo "用户名4" + deploy_username
                 // echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
 
