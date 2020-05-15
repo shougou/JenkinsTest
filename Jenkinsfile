@@ -5,7 +5,7 @@ pipeline {
         // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
         timeout(time:1,unit:'HOURS')
     }
-    // 代码改了参数之后第一次执行pipeline的时候参数还是显示之前的，设置git提交之后jenkins能自动获取的最新代码
+    // 首次执行无需选择参数，首次执行会生成Jenkins的参数选择块的内容，缺省值作为参数。首次执行之后，Job参数的设定也已经生成，再次执行的时候，输入参数的选择则会生效
     parameters {
         // string 字符串类型参数
         // text	文本类型参数，与字符串的区别在于可以包含多行信息，用于传入较多信息输入
@@ -39,8 +39,8 @@ pipeline {
         text(
             name: 'release_note', 
             defaultValue: 'Release Note 信息如下所示: \n \
-                           Bug-Fixed: \n \
-                           Feature-Added: ', 
+            Bug-Fixed: \n \
+            Feature-Added: ', 
             description: 'Release Note的详细信息是什么 ?'
         )
 
@@ -56,6 +56,7 @@ pipeline {
             description: '部署机器连接时需要用到的密码信息是什么 '
         )
 
+        // 文件怎么用
         file(
             name: "deploy_property_file", 
             description: "你需要输入的部署环境的设定文件是什么 ?"
@@ -86,6 +87,9 @@ pipeline {
                 //     name == 'lisi'
                 //     echo name
                 // }
+                echo '参数：' ${params}
+                echo '参数：' params
+
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
             }
