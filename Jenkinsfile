@@ -74,13 +74,8 @@ pipeline {
                 // echo 'params.user is '+ user //root
                 // echo '${params.user} is '+ ${params.user} //hanpl
                 
-                // echo 'manager is '+manager
-                // echo 'manager is '+params.manager
-
+                
                 // // echo env.PATH 打印环境变量
-
-                // echo 'isFriend is '+isFriend
-                // echo 'params.isFriend is '+params.isFriend
 
                 // script{
                 //     // name赋值，不正确不生效
@@ -88,8 +83,10 @@ pipeline {
                 //     echo name
                 // }
                 echo "参数：${params}"
-                echo "参数：${deploy_username}"
-                echo '参数：${params}' //错误用法
+                echo "用户名 ${deploy_username}"
+                echo "用户名" + params.deploy_username
+                echo "用户名" + deploy_username
+                // echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
 
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
