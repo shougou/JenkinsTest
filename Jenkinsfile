@@ -22,13 +22,13 @@ pipeline {
                 stage('Parallel - A'){
                     //agent
                     steps{
-                        echo 'on Parallel - A'
+                        echo '-- on Parallel - A'
                     }
                 }
                 stage('Parallel - B'){
                     //agent
                     steps{
-                        echo 'on Parallel - B'
+                        echo '-- on Parallel - B'
                     }
                 }
             } 
@@ -43,6 +43,35 @@ pipeline {
                 echo './deploy staging'
                 echo './run-smoke-tests'
             }
+        }
+    }
+    // post 部分定义一个或多个steps 
+    // currentBuild.result
+    post{
+        // 无论流水线或阶段的完成状态如何，都允许在 post 部分运行该步骤。
+        always {
+            echo '-- This will always run'
+        }
+        // 只有当前流水线或阶段的完成状态与它之前的运行不同时，才允许在 post 部分运行该步骤。
+        changed {
+            echo '-- This will run only if the state of the Pipeline has changed'
+            echo '-- For example, if the Pipeline was previously failing but is now successful'
+        }
+        // 只有当前流水线或阶段的完成状态为"failure"，通常web UI是红色。
+        failure {
+            echo '-- This will run only if failed'
+        }
+        // 只有当前流水线或阶段的完成状态为"success"，通常web UI是蓝色或绿色。
+        success {
+            echo '-- This will run only if successful'
+        }
+        // 只有当前流水线或阶段的完成状态为"unstable"，通常由于测试失败,代码违规等造成。通常web UI是黄色。
+        unstable {            
+            echo '-- This will run only if the run was marked as unstable'
+        }
+        // 只有当前流水线或阶段的完成状态为"aborted"，通常由于流水线被手动的aborted。通常web UI是灰色。
+        aborted {
+            echo '-- This will run only if aborted'
         }
     }
 }
