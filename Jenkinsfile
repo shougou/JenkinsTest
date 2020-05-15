@@ -1,16 +1,27 @@
 pipeline {
     agent any
-    // 定义流水线运行时的配置选项
+    // 定义流水线运行时的配置选项 
     options {
-        timeout(time:1,unit:'SECONDS')
+        // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
+        timeout(time:1,unit:'HOURS')
+    }
+    parameters {
+        string (name:'user',defaultValue:'hanpl',description:'')
+        booleanParam (name:'isFriend',defaultValue:true,description:'')
     }
     stages {
         stage('Build - Staging') {
             steps {
-                echo name
+                // 引用界面传入的参数，两种方式
+                echo 'name is '+name
+                echo 'params.name is '+params.name
+
+                echo 'user is '+params.user
+                echo 'params.user is '+user
                 echo env.PATH
-                echo params.name
+                
                 script{
+                    // name赋值，不正确不生效
                     name == 'lisi'
                     echo name
                 }
