@@ -64,6 +64,7 @@ pipeline {
         // 只有当前流水线或阶段的完成状态为"success"，通常web UI是蓝色或绿色。
         success {
             echo '-- This will run only if successful'
+            mail to: 13111002493@163.com, subject: 'The Pipeline successed :)'
         }
         // 只有当前流水线或阶段的完成状态为"unstable"，通常由于测试失败,代码违规等造成。通常web UI是黄色。
         unstable {            
