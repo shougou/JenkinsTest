@@ -17,17 +17,19 @@ pipeline {
                 echo 'name is '+name
                 echo 'params.name is '+params.name
 
-                echo 'user is '+params.user
-                echo 'params.user is '+ params.user
+                echo 'user is '+params.user //hanpl
+                echo 'params.user is '+ params.user //hanpl
+                echo 'params.user is '+ user //root
+                echo '${params.user} is '+ ${params.user} //hanpl
+                
+                echo 'manager is '+manager
+                echo 'manager is '+params.manager
 
                 // echo env.PATH 打印环境变量
 
                 echo 'isFriend is '+isFriend
-                echo 'isFriend is '+params.isFriend
+                echo 'params.isFriend is '+params.isFriend
 
-                echo 'manager is '+manager
-                echo 'manager is '+params.manager
-                
                 script{
                     // name赋值，不正确不生效
                     name == 'lisi'
