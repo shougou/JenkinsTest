@@ -102,12 +102,15 @@ pipeline {
                     echo "当前所属阶段：${name} (默认值)"
                     sh '/home/app/jenkins/testreturn.sh > commandResult'
                     name=readFile('commandResult').trim()
-                    echo "${name}" // 返回值应该是test
+                    echo "${name}" // 返回值应该是lisi
+                    name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
+                    echo "${name}" // 返回值应该是wangwu
                 }
             }
         }
         stage('Deploy - Staging') {
              steps {
+                echo "${name}"
                 echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
                 echo "Deploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
                 echo "Deploy stage: 部署连接的密码 : ${params.deploy_password} ..." 
