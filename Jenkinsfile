@@ -75,8 +75,10 @@ pipeline {
     }
     stages {
         stage('ShareLibrary') {
-            script{ 
-                tools.PrintMes("获取代码",'green')
+            steps {
+                script{ 
+                    tools.PrintMes("获取代码",'green')
+                }
             }
         }
         stage('Build - Staging') {
