@@ -149,12 +149,12 @@ pipeline {
                 timeout(time: 3, unit: 'MINUTES') {
                     // sh './health-check.sh'
                 }
-                post {
+            }
+            post {
                     always {
                         echo 'post in stage'
                     }
                 }
-            }
         }
     }
     // post可以放在顶层，也就是和agent{…}同级，也可以放在stage里面
