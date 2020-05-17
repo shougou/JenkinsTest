@@ -75,6 +75,9 @@ pipeline {
     }
     stages {
         stage('ShareLibrary') {
+            when { 
+                environment name: 'stageName', value: 'build'
+            }
             steps {
                 script{ 
                     tools.PrintMes("获取代码",'green')
