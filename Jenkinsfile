@@ -89,7 +89,7 @@ pipeline {
 
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
-                echo "当前所属阶段：${params.stageName} (默认值)"
+                echo "当前所属阶段：${name} (默认值)"
             }
         }
         stage('Test - Staging') {
@@ -99,10 +99,10 @@ pipeline {
                 echo 'Testing'
 
                 script{
-                    echo "当前所属阶段：${params.stageName} (默认值)"
+                    echo "当前所属阶段：${name} (默认值)"
                     sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    params.stageName=readFile('commandResult').trim()
-                    echo "${params.stageName}" // 返回值应该是test
+                    name=readFile('commandResult').trim()
+                    echo "${name}" // 返回值应该是test
                 }
             }
         }
