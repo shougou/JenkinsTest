@@ -1,3 +1,7 @@
+#!groovy
+@Library('jenkinslib') _
+def tools = new org.devops.tools()
+
 pipeline {
     agent any
     // 定义流水线运行时的配置选项 
@@ -70,6 +74,11 @@ pipeline {
         )
     }
     stages {
+        stage('ShareLibrary') {
+            script{ 
+                tools.PrintMes("获取代码",'green')
+            }
+        }
         stage('Build - Staging') {
             steps {
                 // // echo env.PATH 打印环境变量
@@ -79,6 +88,7 @@ pipeline {
                 //     name == 'lisi'
                 //     echo name
                 // }
+                
                 echo "参数：${params}"
                 echo "用户名1 ${deploy_username}"
                 echo "用户名2 ${params.deploy_username}"

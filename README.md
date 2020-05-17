@@ -1,1 +1,4 @@
 # JenkinsTest
+src目录类似于标准java目录结构。执行流水线时，此目录将添加至类路径calss_path中。
+vars目录托管脚本文件，这些脚本文件在“管道”中作为变量公开
+resources目录允许libraryResource从外部库中使用步骤来加载相关联的非Groovy文件。
