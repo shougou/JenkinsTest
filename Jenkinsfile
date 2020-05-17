@@ -2,6 +2,8 @@
 @Library('jenkinslib') _
 def tools = new org.devops.tools()
 
+String workspace = '/home/app/jenkins/'
+
 pipeline {
     agent any
     // 定义流水线运行时的配置选项 
@@ -115,7 +117,8 @@ pipeline {
 
                 script{
                     echo "当前所属阶段：${name} (默认值)"
-                    sh '/home/app/jenkins/testreturn.sh > commandResult'
+                    // sh '/home/app/jenkins/testreturn.sh > commandResult'
+                    sh "${workspace}testreturn.sh > commandResult"
                     name=readFile('commandResult').trim()
                     echo "${name}" // 返回值应该是lisi
                     name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
