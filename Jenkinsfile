@@ -149,10 +149,16 @@ pipeline {
                 timeout(time: 3, unit: 'MINUTES') {
                     // sh './health-check.sh'
                 }
+                post {
+                    always {
+                        echo 'post in stage'
+                    }
+                }
             }
         }
     }
-    // post 部分定义一个或多个steps 
+    // post可以放在顶层，也就是和agent{…}同级，也可以放在stage里面
+    // post部分定义Pipeline运行或阶段结束时运行的操作。
     // currentBuild.result
     post{
         // 无论流水线或阶段的完成状态如何，都允许在 post 部分运行该步骤。
