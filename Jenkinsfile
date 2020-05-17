@@ -6,7 +6,6 @@ pipeline {
         timeout(time:1,unit:'HOURS')
     }
     // 首次执行无需选择参数，首次执行会生成Jenkins的参数选择块的内容，缺省值作为参数。首次执行之后，Job参数的设定也已经生成，再次执行的时候，输入参数的选择则会生效
-    // 构建参数的时候怎么修改默认参数值？
     parameters {
         // string 字符串类型参数
         // text	文本类型参数，与字符串的区别在于可以包含多行信息，用于传入较多信息输入
@@ -15,9 +14,11 @@ pipeline {
         // file	指定构建过程中所需要的文件
         // password 考虑到安全的因素，需要通过参数方式传递的密码类型
 
-        // string (name:'user',defaultValue:'hanpl',description:'')
-        // string (name:'manager',defaultValue:'zongzy',description:'')
-        // booleanParam (name:'isFriend',defaultValue:true,description:'')
+        string(
+                description: '当前所属stage ?',
+                name: 'stageName', 
+                defaultValue: 'build'
+        )
 
         choice(
             description: '你需要选择哪个模块进行构建 ?',
@@ -80,10 +81,14 @@ pipeline {
                 echo "用户名4 " + deploy_username
                 // echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
-                deploy_username = 'http://www.baidu.com'
-                echo "${deploy_username}"
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
+                echo "当前所属阶段：${params.stageName} (默认值)"
+
+        //         script{
+        //        name='aa'
+        //        echo "${name}"
+        //    }
             }
         }
         stage('Test - Staging') {
@@ -91,6 +96,13 @@ pipeline {
                 echo "用户名5 ${params.deploy_username}"
                 echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
                 echo 'Testing'
+
+                script{
+                    echo "当前所属阶段：${params.stageName} (默认值)"
+                    sh '/home/app/jenkins/testreturn.sh > commandResult'
+                    params.stageName=readFile('commandResult').trim()
+                    echo "${params.stageName}"
+                }
             }
         }
         stage('Deploy - Staging') {
