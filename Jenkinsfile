@@ -1,6 +1,7 @@
 #!groovy
-@Library('jenkinslib') _
-def tools = new org.devops.tools()
+@Library('jenkinslib') _ //加载
+def tools = new org.devops.tools() //src
+call() //vars
 
 String workspace = '/home/app/jenkins/'
 
