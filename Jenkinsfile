@@ -8,7 +8,7 @@ def tools = new org.devops.tools() //src
 hello() //要定义 hello, 需要创建 vars/hello.groovy`文件并实现`call 方法。
 hello('Joe')
 
-String workspace = '/home/app/jenkins/'
+String jenkinsUrl = '/home/app/jenkins/'
 
 pipeline {
     agent any //必须在pipeline块内的顶层定义，stage块内的agent是可选的
@@ -38,11 +38,7 @@ pipeline {
         // choice	类似下拉框或者支持多值的单选参数
         // file	指定构建过程中所需要的文件
         // password 考虑到安全的因素，需要通过参数方式传递的密码类型
-
-        // string (name:'user',defaultValue:'hanpl',description:'')
-        // string (name:'manager',defaultValue:'zongzy',description:'')
-        // booleanParam (name:'isFriend',defaultValue:true,description:'')
-
+        
         choice(
             description: '你需要选择哪个模块进行构建 ?',
             name: 'modulename',
@@ -162,7 +158,7 @@ pipeline {
                 script{
                     echo "当前所属阶段：${name} (默认值)"
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    sh "${workspace}testreturn.sh > commandResult"
+                    sh "${jenkinsUrl}testreturn.sh > commandResult"
                     name=readFile('commandResult').trim()
                     echo "${name}" // 返回值应该是lisi
                     name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
