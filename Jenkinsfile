@@ -38,7 +38,7 @@ pipeline {
         // choice	类似下拉框或者支持多值的单选参数
         // file	指定构建过程中所需要的文件
         // password 考虑到安全的因素，需要通过参数方式传递的密码类型
-        
+
         choice(
             description: '你需要选择哪个模块进行构建 ?',
             name: 'modulename',
@@ -112,10 +112,6 @@ pipeline {
                 environment name: 'stageName', value: 'build'
             }
 
-            // environment { 
-            //     AN_ACCESS_KEY = credentials('my-prefined-secret-text')  //Secret Text
-            // }
-
             // steps部分必须包含一个或多个步骤
             steps {
                 //声明式流水线不允许在`script`指令之外使用全局变量
@@ -157,10 +153,12 @@ pipeline {
 
                 script{
                     echo "当前所属阶段：${name} (默认值)"
+                    
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${jenkinsUrl}testreturn.sh > commandResult"
                     name=readFile('commandResult').trim()
                     echo "${name}" // 返回值应该是lisi
+
                     name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
                     echo "${name}" // 返回值应该是wangwu
                 }
@@ -178,7 +176,6 @@ pipeline {
         }
         stage('Parallel - Staging'){
             failFast true //failFast true 当其中一个进程失败时，强制所有的 parallel 阶段都被终止
-            // 声明式流水线的阶段可以在他们内部声明多个嵌套阶段, 它们将并行执行。
             // 一个stage有且之只能有一个 steps /stages 或 parallel的阶段。 
             // 嵌套的stages 本身不能包含进一步的 parallel, 但是其他的阶段的行为与任何其他 stage 相同，包括顺序执行的stage列表stages。
             // 任何包含 parallel 的阶段不能包含 agent 或 tools 阶段, 因为那些和steps没有关系。 ?
@@ -212,12 +209,12 @@ pipeline {
                     always {
                         echo 'post in stage'
                     }
-                }
+            }
         }
     }
     // post可以放在顶层，也就是和agent{…}同级，也可以放在stage里面
     // post部分定义Pipeline运行或阶段结束时运行的操作。
-    // currentBuild.result
+    // currentBuild.result???
     post{
         // 无论流水线或阶段的完成状态如何，都允许在 post 部分运行该步骤。
         always {
