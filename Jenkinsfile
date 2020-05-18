@@ -153,7 +153,8 @@ pipeline {
 
                 script{
                     
-                    name=sh(script: "/root/.jenkins/workspace/deployPipeline/shfolder/first.sh", returnStdout: true).trim()
+                    sh "chmod +x /root/.jenkins/workspace/deployPipeline/shfolder/second.sh"
+                    name=sh(script: "/root/.jenkins/workspace/deployPipeline/shfolder/second.sh", returnStdout: true).trim()
                     // name=sh(script: "/shfolder/first.sh", returnStdout: true).trim()
 
                     echo "当前所属阶段：${name} (默认值)"
