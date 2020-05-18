@@ -92,7 +92,9 @@ pipeline {
                     tools.PrintMes("获取代码",'green')
                     hello()
                     hello('Joe')
+                    hello.om()
                     evenOrOdd(5)
+
                 }
             }
         }
