@@ -5,7 +5,8 @@
 // @Library(['my-shared-library', 'otherlib@abc1234']) _  //一条语句访问多个库
 
 def tools = new org.devops.tools() //src
-hello() //vars 文件名
+hello() //要定义 hello, 需要创建 vars/hello.groovy`文件并实现`call 方法。
+hello('Joe')
 
 String workspace = '/home/app/jenkins/'
 
