@@ -1,2 +1,1 @@
-echo 'this is first'
-echo 'lisi'
+echo 'lisi2'

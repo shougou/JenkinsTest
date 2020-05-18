@@ -157,15 +157,11 @@ pipeline {
                     sh "chmod +x ./shfolder/second.sh"
                     sh "chmod +x ./shfolder/three.sh"
 
-                    echo "当前所属阶段：${name} (默认值)"
+                    tools.PrintMes("当前所属阶段：${name} (zhangsan)",'green')
 
                     name=sh(script: "./shfolder/first.sh ${name}", returnStdout: true).trim()
-                    echo "first所属阶段：${name} (lisi2)"
+                    tools.PrintMes("first所属阶段：${name} (lisi2)",'green')
 
-                    name=sh(script: "./shfolder/second.sh", returnStdout: true).trim()
-                    // name=sh(script: "/shfolder/first.sh", returnStdout: true).trim()
-
-                    echo "当前所属阶段：${name} (默认值)"
                     
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${jenkinsUrl}testreturn.sh > commandResult"
@@ -173,13 +169,13 @@ pipeline {
                     echo "${name}" // 返回值应该是lisi
 
                     name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
-                    echo "${name}" // 返回值应该是wangwu
+                    // echo "${name}" // 返回值应该是wangwu
                 }
             }
         }
         stage('Deploy - Staging') {
              steps {
-                echo "${name}"
+                tools.PrintMes("当前所属阶段：${name} (wangwu)",'green')
                 echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
                 echo "Deploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
                 echo "Deploy stage: 部署连接的密码 : ${params.deploy_password} ..." 
