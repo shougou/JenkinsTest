@@ -1,9 +1,5 @@
 #!groovy
-@Library('jenkinslib@master') _ //加载
-// @Library("jenkinslib@$BRANCH_NAME") 版本可以被 computed， 而不是像注释那样的常量
-// _ 等同于import org.devops.tools  不建议 import 一个全局变量/函数, 由于这将强制编译器 将字段和方法解释为 static。 即使他们是要实例化的。
-// @Library(['my-shared-library', 'otherlib@abc1234']) _  //一条语句访问多个库
-
+@Library('jenkinslib') _ //加载
 def tools = new org.devops.tools() //src
 hello() //vars 文件名
 
