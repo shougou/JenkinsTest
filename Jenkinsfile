@@ -94,7 +94,6 @@ pipeline {
                     hello()
                     hello('Joe')
                     hello.om()
-                    evenOrOdd('5')
                 }
             }
         }
