@@ -7,7 +7,7 @@
 def tools = new org.devops.tools() //src
 hello() //要定义 hello, 需要创建 vars/hello.groovy`文件并实现`call 方法。
 hello('Joe')
-evenOrOdd(currentBuild.getNumber())
+evenOrOdd(9)
 
 String workspace = '/home/app/jenkins/'
 
