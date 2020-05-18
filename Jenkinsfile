@@ -11,14 +11,26 @@ hello('Joe')
 String workspace = '/home/app/jenkins/'
 
 pipeline {
-    agent any
-    // 定义流水线运行时的配置选项 
+    agent any //必须在pipeline块内的顶层定义，stage块内的agent是可选的
+
+    // 定义流水线运行时的配置选项
     options {
-        // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
-        timeout(time:1,unit:'HOURS')
+        //持久化工件和控制台输出，用于保存Pipeline最近几次运行的数据
+        buildDiscarder(logRotator(numToKeepStr: '1')) //默认几次？
+        disableConcurrentBuilds() //不允许并行执行Pipeline。可用于防止同时访问共享资源等。
+        retry(3) //如果失败，请按指定的次数重试整个管道。
+        skipStagesAfterUnstable() //一旦构建状态进入了“不稳定”状态，就跳过stage。
+        timeout(time:1,unit:'HOURS') //设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
     }
+
+    //environment顶级pipeline块中使用的指令将适用于Pipeline中的所有步骤
+    //在一个stage中定义的environment指令只将给定的环境变量应用于该stage中的步骤
+    //environment具有一个帮助方法credentials()，可用于在Jenkins环境中通过其标识符访问预定义的凭据
+    environment { 
+        CC = 'clang'
+    }
+
     // 首次执行无需选择参数，首次执行会生成Jenkins的参数选择块的内容，缺省值作为参数。首次执行之后，Job参数的设定也已经生成，再次执行的时候，输入参数的选择则会生效
-    // 构建参数的时候怎么修改默认参数值？
     parameters {
         // string 字符串类型参数
         // text	文本类型参数，与字符串的区别在于可以包含多行信息，用于传入较多信息输入
@@ -81,11 +93,24 @@ pipeline {
             description: "你需要输入的部署环境的设定文件是什么 ?"
         )
     }
+    // stages 在pipeline内只有一次
     stages {
         stage('ShareLibrary') {
+            // stage的options指令类似于Pipeline根目录中的options指令。但是，stage的 options只能包含与stage相关的步骤，如retry，timeout或timestamps，或声明性选项，如skipDefaultCheckout。
+            // 在stage内，options在进入agent或检查任何when条件之前调用指令中的步骤。
+            options {
+                timeout(time: 1, unit: 'HOURS') 
+            }
+
             when { 
                 environment name: 'stageName', value: 'build'
             }
+
+            environment { 
+                AN_ACCESS_KEY = credentials('my-prefined-secret-text')  //Secret Text
+            }
+
+            // steps部分必须包含一个或多个步骤
             steps {
                 //声明式流水线不允许在`script`指令之外使用全局变量
                 script{ 
