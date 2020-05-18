@@ -96,10 +96,12 @@ pipeline {
     // stages 在pipeline内只有一次
     stages {
         stage('script - stage') {
-            script {
-                def browsers = ['chrome', 'firefox']
-                for (int i = 0; i < browsers.size(); ++i) {
-                    echo "Testing the ${browsers[i]} browser"
+            steps {
+                script {
+                    def browsers = ['chrome', 'firefox']
+                    for (int i = 0; i < browsers.size(); ++i) {
+                        echo "Testing the ${browsers[i]} browser"
+                    }
                 }
             }
         }
