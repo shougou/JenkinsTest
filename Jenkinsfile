@@ -95,7 +95,7 @@ pipeline {
     }
     // stages 在pipeline内只有一次
     stages {
-        stage('ShareLibrary') {
+        stage('script - stage') {
             script {
                 def browsers = ['chrome', 'firefox']
                 for (int i = 0; i < browsers.size(); ++i) {
