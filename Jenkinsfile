@@ -153,7 +153,15 @@ pipeline {
 
                 script{
                     
+                    sh "chmod +x ./shfolder/first.sh"
                     sh "chmod +x ./shfolder/second.sh"
+                    sh "chmod +x ./shfolder/three.sh"
+
+                    echo "当前所属阶段：${name} (默认值)"
+
+                    name=sh(script: "./shfolder/first.sh ${name}", returnStdout: true).trim()
+                    echo "first所属阶段：${name} (lisi2)"
+
                     name=sh(script: "./shfolder/second.sh", returnStdout: true).trim()
                     // name=sh(script: "/shfolder/first.sh", returnStdout: true).trim()
 
