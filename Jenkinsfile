@@ -93,8 +93,18 @@ pipeline {
             description: "你需要输入的部署环境的设定文件是什么 ?"
         )
     }
+
+    //定义自动安装和放置工具的部分PATH。如果指定agent none，这将被忽略。
+    tools {
+        maven 'apache-maven-3.5.3' 
+    }
     // stages 在pipeline内只有一次
     stages {
+        stage('Example') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
         stage('ShareLibrary') {
             // stage的options指令类似于Pipeline根目录中的options指令。但是，stage的 options只能包含与stage相关的步骤，如retry，timeout或timestamps，或声明性选项，如skipDefaultCheckout。
             // 在stage内，options在进入agent或检查任何when条件之前调用指令中的步骤。
@@ -106,9 +116,9 @@ pipeline {
                 environment name: 'stageName', value: 'build'
             }
 
-            environment { 
-                AN_ACCESS_KEY = credentials('my-prefined-secret-text')  //Secret Text
-            }
+            // environment { 
+            //     AN_ACCESS_KEY = credentials('my-prefined-secret-text')  //Secret Text
+            // }
 
             // steps部分必须包含一个或多个步骤
             steps {
