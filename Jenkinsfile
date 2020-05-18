@@ -96,6 +96,14 @@ pipeline {
     // stages 在pipeline内只有一次
     stages {
         stage('ShareLibrary') {
+            script {
+                def browsers = ['chrome', 'firefox']
+                for (int i = 0; i < browsers.size(); ++i) {
+                    echo "Testing the ${browsers[i]} browser"
+                }
+            }
+        }
+        stage('ShareLibrary') {
             // stage的options指令类似于Pipeline根目录中的options指令。但是，stage的 options只能包含与stage相关的步骤，如retry，timeout或timestamps，或声明性选项，如skipDefaultCheckout。
             // 在stage内，options在进入agent或检查任何when条件之前调用指令中的步骤。
             options {
@@ -173,9 +181,9 @@ pipeline {
         stage('Parallel - Staging'){
             failFast true //failFast true 当其中一个进程失败时，强制所有的 parallel 阶段都被终止
             // 声明式流水线的阶段可以在他们内部声明多个嵌套阶段, 它们将并行执行。
-            // 一个阶段必须只有一个 steps 或 parallel的阶段。 
-            // 嵌套阶段本身不能包含进一步的 parallel 阶段, 但是其他的阶段的行为与任何其他 stage 相同。
-            // 任何包含 parallel 的阶段不能包含 agent 或 tools 阶段, 因为他们没有相关 steps。
+            // 一个stage有且之只能有一个 steps /stages 或 parallel的阶段。 
+            // 嵌套的stages 本身不能包含进一步的 parallel, 但是其他的阶段的行为与任何其他 stage 相同，包括顺序执行的stage列表stages。
+            // 任何包含 parallel 的阶段不能包含 agent 或 tools 阶段, 因为那些和steps没有关系。 ?
             parallel{
                 stage('Parallel - A'){
                     //agent
