@@ -95,6 +95,7 @@ pipeline {
     }
 
     //定义自动安装和放置工具的部分PATH。如果指定agent none，这将被忽略。
+    //工具名称必须在Jenkins 管理Jenkins → 全局工具配置中预置。
     tools {
         maven 'apache-maven-3.5.3' 
     }
