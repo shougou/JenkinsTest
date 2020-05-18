@@ -86,6 +86,7 @@ pipeline {
                 environment name: 'stageName', value: 'build'
             }
             steps {
+                //声明式流水线不允许在`script`指令之外使用全局变量
                 script{ 
                     tools.PrintMes("获取代码",'green')
                 }
