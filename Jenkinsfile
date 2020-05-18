@@ -175,7 +175,10 @@ pipeline {
         }
         stage('Deploy - Staging') {
              steps {
-                tools.PrintMes("当前所属阶段：${name} (wangwu)",'green')
+                script{ 
+                    tools.PrintMes("当前所属阶段：${name} (wangwu)",'green')
+                }
+                
                 echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
                 echo "Deploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
                 echo "Deploy stage: 部署连接的密码 : ${params.deploy_password} ..." 
