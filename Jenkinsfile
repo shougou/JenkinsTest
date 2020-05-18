@@ -152,6 +152,8 @@ pipeline {
                 echo 'Testing'
 
                 script{
+                    name=sh(script: "./shfolder/first.sh", returnStdout: true).trim()
+
                     echo "当前所属阶段：${name} (默认值)"
                     
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
