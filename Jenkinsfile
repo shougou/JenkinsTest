@@ -48,7 +48,7 @@ pipeline {
         string(
                 description: '当前所属stage ?',
                 name: 'variable', 
-                defaultValue: 'build'
+                defaultValue: 'zhangsan'
         )
 
         string(
@@ -96,12 +96,12 @@ pipeline {
                 script {
                     def browsers = ['chrome', 'firefox']
                     for (int i = 0; i < browsers.size(); ++i) {
-                        echo "Testing the ${browsers[i]} browser"
+                        tools.PrintMes("Testing the ${browsers[i]} browser",'red')
                     }
                 }
             }
         }
-        stage('Sharelib - stage') {
+        stage('sharelib - stage') {
             // stage的options指令类似于Pipeline根目录中的options指令。但是，stage的 options只能包含与stage相关的步骤，如retry，timeout或timestamps，或声明性选项，如skipDefaultCheckout。
             // 在stage内，options在进入agent或检查任何when条件之前调用指令中的步骤。
             options {
@@ -117,6 +117,8 @@ pipeline {
                 //声明式流水线不允许在`script`指令之外使用全局变量
                 script{ 
                     tools.PrintMes("获取代码",'green')
+                    // tools.PrintMes(hello(),'green')
+                    // tools.PrintMes(hello('Joe'),'green')
                     hello()
                     hello('Joe')
                 }
@@ -132,13 +134,20 @@ pipeline {
                 echo "用户名4 " + deploy_username
                 // echo '参数：${params}' //错误用法
                 // echo '参数：' params //错误用法
+                
+                echo "printParameter stage: 部署机器的名称 : ${params.deploy_hostname} ..."
+                echo "DeprintParameterploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
+                echo "printParameter stage: 部署连接的密码 : ${params.deploy_password} ..." 
+                echo "printParameter stage: Release Note的信息为 : ${params.release_note} ..." 
+                echo "printParameter stage: 选中的构建Module为 : ${params.modulename} ..."
 
-                echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
-                echo 'Building' 
-                echo "当前所属阶段：${variable} (默认值)"
+                echo "变量值：${variable} (默认值zhangsan)"
+                script{ 
+                    tools.PrintMes("变量值：${variable} (zhangsan)",'green')
+                }
             }
         }
-        stage('Test - Staging') {
+        stage('setVarVal - Staging') {
             steps {
                 echo "用户名5 ${params.deploy_username}"
                 echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
@@ -150,32 +159,25 @@ pipeline {
                     sh "chmod +x ./shfolder/second.sh"
                     sh "chmod +x ./shfolder/three.sh"
 
-                    tools.PrintMes("当前所属阶段：${variable} (zhangsan)",'green')
+                    tools.PrintMes("变量值：${variable} (zhangsan)",'green')
 
                     variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
-                    tools.PrintMes("first所属阶段：${variable} (lisi2)",'green')
+                    tools.PrintMes("变量值：${variable} (lisi2)",'green')
 
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${jenkinsUrl}testreturn.sh > commandResult"
                     variable=readFile('commandResult').trim()
-                    echo "${nvariableame}" // 返回值应该是lisi
+                    tools.PrintMes("变量值：${variable} (lisi)",'green')
 
                     variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
-                    // echo "${variable}" // 返回值应该是wangwu
                 }
             }
         }
-        stage('Deploy - Staging') {
-             steps {
+         stage('verifyVariable - Staging') {
+            steps {
                 script{ 
-                    tools.PrintMes("当前所属阶段：${variable} (wangwu)",'green')
+                    tools.PrintMes("变量值：${variable} (wangwu)",'green')
                 }
-                
-                echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
-                echo "Deploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
-                echo "Deploy stage: 部署连接的密码 : ${params.deploy_password} ..." 
-                echo "Deploy stage: Release Note的信息为 : ${params.release_note} ..." 
-                echo './deploy staging'
             }
         }
         stage('Parallel - Staging'){
