@@ -101,7 +101,7 @@ pipeline {
                 }
             }
         }
-        stage('ShareLibrary') {
+        stage('Sharelib - stage') {
             // stage的options指令类似于Pipeline根目录中的options指令。但是，stage的 options只能包含与stage相关的步骤，如retry，timeout或timestamps，或声明性选项，如skipDefaultCheckout。
             // 在stage内，options在进入agent或检查任何when条件之前调用指令中的步骤。
             options {
@@ -125,15 +125,8 @@ pipeline {
         stage('Build - Staging') {
             steps {
                 // // echo env.PATH 打印环境变量
-
-                // script{
-                //     // name赋值，不正确不生效
-                //     name == 'lisi'
-                //     echo name
-                // }
-                
                 echo "参数：${params}"
-                echo "用户名1 ${deploy_username}"
+                // echo "用户名1 ${deploy_username}"
                 echo "用户名2 ${params.deploy_username}"
                 echo "用户名3 " + params.deploy_username
                 echo "用户名4 " + deploy_username
@@ -162,7 +155,6 @@ pipeline {
                     name=sh(script: "./shfolder/first.sh ${name}", returnStdout: true).trim()
                     tools.PrintMes("first所属阶段：${name} (lisi2)",'green')
 
-                    
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${jenkinsUrl}testreturn.sh > commandResult"
                     name=readFile('commandResult').trim()
