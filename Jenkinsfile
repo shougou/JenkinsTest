@@ -163,13 +163,6 @@ pipeline {
 
                     variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
                     tools.PrintMes("变量值：${variable} (lisi2)",'green')
-
-                    // sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    sh "${jenkinsUrl}testreturn.sh > commandResult"
-                    variable=readFile('commandResult').trim()
-                    tools.PrintMes("变量值：${variable} (lisi)",'green')
-
-                    variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
                 }
             }
         }
