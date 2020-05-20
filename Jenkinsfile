@@ -47,7 +47,7 @@ pipeline {
 
         string(
                 description: '当前所属stage ?',
-                name: 'stageName', 
+                name: 'variable', 
                 defaultValue: 'build'
         )
 
@@ -109,7 +109,7 @@ pipeline {
             }
 
             when { 
-                environment name: 'stageName', value: 'build'
+                environment name: 'variable', value: 'build'
             }
 
             // steps部分必须包含一个或多个步骤
@@ -122,11 +122,11 @@ pipeline {
                 }
             }
         }
-        stage('Build - Staging') {
+        stage('printParameter - Staging') {
             steps {
                 // // echo env.PATH 打印环境变量
                 echo "参数：${params}"
-                // echo "用户名1 ${deploy_username}"
+                echo "用户名1 ${deploy_username}"
                 echo "用户名2 ${params.deploy_username}"
                 echo "用户名3 " + params.deploy_username
                 echo "用户名4 " + deploy_username
@@ -135,7 +135,7 @@ pipeline {
 
                 echo "Build stage: 选中的构建Module为 : ${params.modulename} ..."
                 echo 'Building' 
-                echo "当前所属阶段：${name} (默认值)"
+                echo "当前所属阶段：${variable} (默认值)"
             }
         }
         stage('Test - Staging') {
@@ -150,25 +150,25 @@ pipeline {
                     sh "chmod +x ./shfolder/second.sh"
                     sh "chmod +x ./shfolder/three.sh"
 
-                    tools.PrintMes("当前所属阶段：${name} (zhangsan)",'green')
+                    tools.PrintMes("当前所属阶段：${variable} (zhangsan)",'green')
 
-                    name=sh(script: "./shfolder/first.sh ${name}", returnStdout: true).trim()
-                    tools.PrintMes("first所属阶段：${name} (lisi2)",'green')
+                    variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
+                    tools.PrintMes("first所属阶段：${variable} (lisi2)",'green')
 
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${jenkinsUrl}testreturn.sh > commandResult"
-                    name=readFile('commandResult').trim()
-                    echo "${name}" // 返回值应该是lisi
+                    variable=readFile('commandResult').trim()
+                    echo "${nvariableame}" // 返回值应该是lisi
 
-                    name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
-                    // echo "${name}" // 返回值应该是wangwu
+                    variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
+                    // echo "${variable}" // 返回值应该是wangwu
                 }
             }
         }
         stage('Deploy - Staging') {
              steps {
                 script{ 
-                    tools.PrintMes("当前所属阶段：${name} (wangwu)",'green')
+                    tools.PrintMes("当前所属阶段：${variable} (wangwu)",'green')
                 }
                 
                 echo "Deploy stage: 部署机器的名称 : ${params.deploy_hostname} ..."
