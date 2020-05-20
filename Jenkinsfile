@@ -234,9 +234,7 @@ pipeline {
         success {
             echo '-- This will run only if successful'
             // 配置邮箱  没有配置邮箱地址
-            mail to: '13111002493@163.com',
-            subject: "successed Pipeline: ${currentBuild.fullDisplayName}",
-            body: "Something is right with ${env.BUILD_URL}"
+         
         }
         // 只有当前流水线或阶段的完成状态为"unstable"，通常由于测试失败,代码违规等造成。通常web UI是黄色。
         unstable {            
