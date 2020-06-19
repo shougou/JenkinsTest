@@ -13,7 +13,7 @@ String jenkinsUrl = '/home/app/jenkins/'
 pipeline {
     agent any //必须在pipeline块内的顶层定义，stage块内的agent是可选的
 
-    // 定义流水线运行时的配置选项
+    // 定义流水线运行时的配置选项 test
     options {
         //持久化工件和控制台输出，用于保存Pipeline最近几次运行的数据
         buildDiscarder(logRotator(numToKeepStr: '1')) //默认几次？
